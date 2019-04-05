@@ -12,6 +12,6 @@ public class Match extends Thread {
     @Override
     public void run() {
         super.run();
-        Exec.cmd("ls");
+        Exec.cmd("TLDbackend/match.sh");
     }
 }
