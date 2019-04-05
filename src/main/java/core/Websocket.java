@@ -33,6 +33,7 @@ public class Websocket extends WebSocketServer {
     public void onMessage(WebSocket conn, String message) {
         broadcast(message);
         Logger.log(conn + ": " + message);
+        process(message);
     }
 
     @Override
@@ -45,5 +46,14 @@ public class Websocket extends WebSocketServer {
         Logger.log("Started WebSocket on Port: " + port);
         setConnectionLostTimeout(0);
         setConnectionLostTimeout(100);
+    }
+
+    private void process(String message) {
+        switch (message) {
+            case "create match":
+                Match match = new Match();
+                match.run();
+                Main.matches.add(match);
+        }
     }
 }
