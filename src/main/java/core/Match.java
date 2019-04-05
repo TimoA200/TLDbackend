@@ -12,6 +12,6 @@ public class Match extends Thread {
     @Override
     public void run() {
         super.run();
-        Exec.cmd("./match.sh");
+        Exec.cmd("../match.sh");
     }
 }
