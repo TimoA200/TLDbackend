@@ -14,6 +14,7 @@ public class Exec {
     public static void cmd(String command, boolean wait) {
         try {
             Process proc = Runtime.getRuntime().exec(command);
+            proc.destroy();
             proc.waitFor();
             BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
@@ -24,8 +25,6 @@ public class Exec {
             }
 
             Logger.log(output);
-
-            proc.destroy();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
