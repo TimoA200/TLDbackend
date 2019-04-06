@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 
 public class Exec {
 
-
     public static void cmd(String command) {
         cmd(command, true);
     }
@@ -14,8 +13,6 @@ public class Exec {
     public static void cmd(String command, boolean wait) {
         try {
             Process proc = Runtime.getRuntime().exec(command);
-            proc.destroy();
-            proc.waitFor();
             BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
             String output = "";
@@ -26,8 +23,6 @@ public class Exec {
 
             Logger.log(output);
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
