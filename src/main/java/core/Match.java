@@ -15,7 +15,7 @@ public class Match extends Thread {
         Exec.cmd("TLDbackend/match.sh yeet 8A3477957A706E4C923FFDF0C757265E");
         try {
             Logger.log("sleep 5000");
-            sleep(5000);
+            sleep(15000);
             Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
         } catch (InterruptedException e) {
             e.printStackTrace();
