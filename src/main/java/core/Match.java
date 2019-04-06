@@ -12,6 +12,6 @@ public class Match extends Thread {
     @Override
     public void run() {
         super.run();
-        Exec.cmd("TLDbackend/match.sh yeet 8A3477957A706E4C923FFDF0C757265E");
+        Exec.cmd("TLDbackend/match.sh yeet 8A3477957A706E4C923FFDF0C757265E", false);
     }
 }
