@@ -11,9 +11,13 @@ public class Exec {
     }
 
     public static void cmd(String command, boolean wait) {
+
+        Process proc = null;
         try {
-            Process proc = Runtime.getRuntime().exec(command);
-            BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            proc = Runtime.getRuntime().exec(command);
+            proc.getErrorStream();
+            proc.waitFor();
+            /*BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
             String output = "";
 
@@ -21,10 +25,13 @@ public class Exec {
                 output += line + "\n";
             }
 
-            Logger.log(output);
-            proc.destroy();
+            Logger.log(output);*/
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            proc.destroy();
         }
     }
 }
