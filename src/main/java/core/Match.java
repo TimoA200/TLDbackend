@@ -25,6 +25,6 @@ public class Match extends Thread {
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
-        Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
+        Exec.cmd("echo 'öö.ö.öäö'");
     }
 }
