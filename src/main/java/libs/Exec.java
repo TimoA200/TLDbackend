@@ -22,6 +22,7 @@ public class Exec {
             }
 
             Logger.log(output);
+            proc.destroy();
         } catch (IOException e) {
             e.printStackTrace();
         }
