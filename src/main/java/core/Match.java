@@ -13,18 +13,11 @@ public class Match extends Thread {
     public void run() {
         super.run();
         Exec.cmd("TLDbackend/match.sh yeet 8A3477957A706E4C923FFDF0C757265E");
-        /*Exec.cmd("echo 'asd'");
         Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
-        Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
-        Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
-        Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
-        Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
-        Exec.cmd("/home/mastermind/csgo-multiserver/csgo-server @yeet start");
+        /*Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
         Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
-        Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
-        Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");
-        Exec.cmd("echo 'öö.ö.öäö'");*/
+        Exec.cmd("echo 'aäsiogjiäüasufhgiawerihf'");*/
     }
 }
