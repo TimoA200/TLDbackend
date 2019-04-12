@@ -15,8 +15,8 @@ public class Exec {
         Process proc = null;
         try {
             proc = Runtime.getRuntime().exec(command);
-            proc.getErrorStream();
-            proc.waitFor();
+            Logger.log(proc.getErrorStream().toString());
+            //proc.waitFor();
             /*BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
             String output = "";
@@ -27,8 +27,6 @@ public class Exec {
 
             Logger.log(output);*/
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             proc.destroy();
