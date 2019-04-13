@@ -15,7 +15,6 @@ public class Exec {
         Process proc = null;
         try {
             proc = Runtime.getRuntime().exec(command);
-            Logger.log(proc.getErrorStream());
             proc.waitFor();
             BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
