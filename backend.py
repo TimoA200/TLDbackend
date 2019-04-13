@@ -8,7 +8,7 @@ class Backend(WebSocket):
     def handleMessage(self):
         for client in clients:
             client.sendMessage(self.address[0] + u' - ' + self.data)
-            print(self.data)
+            process(self.data)
 
     def handleConnected(self):
         print(self.address, 'connected')
@@ -27,5 +27,5 @@ backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
 
 
-def process(self):
-    print('process: ' + self.data)
+def process(data):
+    print('process: ' + data)
