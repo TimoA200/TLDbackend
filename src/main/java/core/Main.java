@@ -16,7 +16,7 @@ public class Main {
         websocket = new Websocket(Settings.WebsocketPort);
         websocket.start();
         try {
-            Runtime.getRuntime().exec("TLDbackend/match.sh yeet 8A3477957A706E4C923FFDF0C757265E").waitFor();
+            Runtime.getRuntime().exec("python 3TLDbackend/test.py").waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
