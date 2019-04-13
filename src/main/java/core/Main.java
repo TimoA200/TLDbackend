@@ -16,7 +16,7 @@ public class Main {
         websocket = new Websocket(Settings.WebsocketPort);
         websocket.start();
         try {
-            Runtime.getRuntime().exec("python 3TLDbackend/test.py").waitFor();
+            Runtime.getRuntime().exec("python3 TLDbackend/test.py").waitFor();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
