@@ -10,6 +10,7 @@ class Backend(WebSocket):
             if client != self:
                 client.sendMessage(self.address[0] + u' - ' + self.data)
                 print('got')
+        print('got1')
 
     def handleConnected(self):
         print(self.address, 'connected')
