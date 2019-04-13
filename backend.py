@@ -36,3 +36,7 @@ class Backend(WebSocket):
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
+
+
+def hmmm():
+    print('hmmm')
