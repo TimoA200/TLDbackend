@@ -7,14 +7,17 @@ clients = []
 
 class Backend(WebSocket):
 
-    def handleessage(self):
+    def handleMessage(self):
         for client in clients:
             client.sendMessage(self.address[0] + u' - ' + self.data)
         print('message received from: ' + self.address[0] + " -> " + self.data)
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
-            os.system('./match.sh yeet 8A3477957A706E4C923FFDF0C757265E')
+            name = data[1]
+            code = data[2]
+            command = './match.sh ' + name + ' ' + code
+            os.system(command)
 
     def handleConnected(self):
         print(self.address, 'connected')
