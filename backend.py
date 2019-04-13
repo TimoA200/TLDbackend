@@ -1,4 +1,5 @@
 import os
+import threading
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 
 clients = []
@@ -6,7 +7,7 @@ clients = []
 
 class Backend(WebSocket):
 
-    def handleMessage(self):
+    def handleessage(self):
         for client in clients:
             client.sendMessage(self.address[0] + u' - ' + self.data)
         print('message received from: ' + self.address[0] + " -> " + self.data)
@@ -27,8 +28,8 @@ class Backend(WebSocket):
         for client in clients:
             client.sendMessage(self.address[0] + u' - disconnected')
 
+    print('after')
+
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
-
-print('after')
