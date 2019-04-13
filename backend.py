@@ -1,8 +1,22 @@
 import os
 import threading
+import time
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 
 clients = []
+
+
+class Check(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        print("run")
+        time.sleep(1)
+
+
+check = Check()
+check.start()
 
 
 class Backend(WebSocket):
@@ -16,8 +30,13 @@ class Backend(WebSocket):
         if data[0] == 'c':
             name = data[1]
             code = data[2]
-            command = './match.sh ' + name + ' ' + code
-            #os.system(command)
+            port = data[3]
+            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP 192.168.178.72 1 ' + name + '-tld-tcp 0'
+            os.system(command)
+            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP 192.168.178.72 1 ' + name + '-tld-udp 0'
+            os.system(command)
+            command = './match.sh ' + name + ' ' + code + ' ' + port
+            os.system(command)
 
     def handleConnected(self):
         print(self.address, 'connected')
@@ -31,12 +50,8 @@ class Backend(WebSocket):
         for client in clients:
             client.sendMessage(self.address[0] + u' - disconnected')
 
-    print('after')
-
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
 
-
-def hmmm():
-    print('hmmm')
+print('Stopping backend')
