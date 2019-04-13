@@ -8,7 +8,7 @@ class Backend(WebSocket):
     def handleMessage(self):
         for client in clients:
             client.sendMessage(self.address[0] + u' - ' + self.data)
-            process(self.data)
+        print('message received from: ' + self.address[0] + " -> " + self.data)
 
     def handleConnected(self):
         print(self.address, 'connected')
