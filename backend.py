@@ -11,8 +11,9 @@ class Check(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        print("run")
-        time.sleep(1)
+        while True:
+            print("run")
+            time.sleep(1)
 
 
 check = Check()
