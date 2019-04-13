@@ -30,3 +30,5 @@ class Backend(WebSocket):
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
+
+print('after')
