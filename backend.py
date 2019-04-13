@@ -25,7 +25,3 @@ class Backend(WebSocket):
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
-
-
-def process(data):
-    print('process: ' + data)
