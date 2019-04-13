@@ -17,7 +17,7 @@ public class Exec {
             proc = Runtime.getRuntime().exec(command);
             Logger.log(proc.getErrorStream());
             proc.waitFor();
-            /*BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = "";
             String output = "";
 
@@ -25,7 +25,7 @@ public class Exec {
                 output += line + "\n";
             }
 
-            Logger.log(output);*/
+            Logger.log(output);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
