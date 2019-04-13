@@ -11,7 +11,7 @@ class Backend(WebSocket):
             client.sendMessage(self.address[0] + u' - ' + self.data)
         print('message received from: ' + self.address[0] + " -> " + self.data)
         if self.data == 'create match':
-            os.system('./match.sh yeet FCEC1E405B3F4B7667B1AB1301ED38B3')
+            os.system('./match.sh yeet 8A3477957A706E4C923FFDF0C757265E')
 
     def handleConnected(self):
         print(self.address, 'connected')
