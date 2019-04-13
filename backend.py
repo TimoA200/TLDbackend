@@ -29,25 +29,15 @@ class Backend(WebSocket):
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
-            print('0')
             name = data[1]
-            print('1')
             code = data[2]
-            print('2')
             port = data[3]
-            print('3')
-            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP 192.168.178.72 1 ' + name + '-tld-tcp 0'
-            print('4')
+            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             os.system(command)
-            print('5')
-            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP 192.168.178.72 1 ' + name + '-tld-udp 0'
-            print('6')
+            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP ' + port + ' 192.168.178.72 1 ' + name + '-tld-udp 0'
             os.system(command)
-            print('7')
             command = './match.sh ' + name + ' ' + code + ' ' + port
-            print('8')
             os.system(command)
-            print('9')
 
     def handleConnected(self):
         print(self.address, 'connected')
