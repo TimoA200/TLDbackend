@@ -17,7 +17,7 @@ class Backend(WebSocket):
             name = data[1]
             code = data[2]
             command = './match.sh ' + name + ' ' + code
-            os.system(command)
+            #os.system(command)
 
     def handleConnected(self):
         print(self.address, 'connected')
