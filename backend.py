@@ -30,6 +30,9 @@ class Backend(WebSocket):
             name = data[1]
             code = data[2]
             port = data[3]
+            print('name: ' + name)
+            print('code: ' + code)
+            print('port: ' + port)
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             os.system(command)
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP ' + port + ' 192.168.178.72 1 ' + name + '-tld-udp 0'
