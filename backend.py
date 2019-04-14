@@ -39,7 +39,7 @@ class Backend(WebSocket):
         elif data[0] == 'd':
             name = data[1]
             port = data[2]
-            command = 'rm -r /root/csgo@ ' + name
+            command = 'rm -r /root/csgo@ ' + name + ''
             os.system(command)
             command = '/home/mastermind/FBShell/FBShell.sh DeletePortMapping 0.0.0.0 ' + port + ' TCP'
             os.system(command)
