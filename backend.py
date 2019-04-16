@@ -39,7 +39,7 @@ class Match:
           #  time.sleep(5)
 
 
-match = Match(, 2, 2, 2)
+match = Match(2, 2, 2, 2)
 
 
 class Backend(WebSocket):
