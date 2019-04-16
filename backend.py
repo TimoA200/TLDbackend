@@ -26,18 +26,13 @@ class Match(threading.Thread):
         self.port = port
         self.mapid = mapid
 
-        print('name: ' + str(name))
-        print('code: ' + str(code))
-        print('port: ' + str(port))
-        print('mapid: ' + str(mapid))
-
-    #def run(self):
-     #   while True:
-      #      print('name:' + self.name)
-       #     print('code:' + self.code)
-        #    print('port:' + self.port)
-         #   print('mapid:' + self.mapid)
-          #  time.sleep(5)
+    def run(self):
+        while True:
+            print('name:' + self.name)
+            print('code:' + self.code)
+            print('port:' + self.port)
+            print('mapid:' + self.mapid)
+            time.sleep(5)
 
 
 match = Match(2, 2, 2, 2)
