@@ -18,8 +18,9 @@ check = Check()
 check.start()
 
 
-class Match:
+class Match(threading.Thread):
     def __init__(self, name, code, port, mapid):
+        threading.Thread.__init__(self)
         self.name = name
         self.code = code
         self.port = port
