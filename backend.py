@@ -18,8 +18,23 @@ check = Check()
 check.start()
 
 
-class Backend(WebSocket):
+class Match(threading.Thread):
+    def __init__(self, name, code, port, mapid):
+        self.name = name
+        self.code = code
+        self.port = port
+        self.mapid = mapid
 
+    def run(self):
+        while True:
+            print('name:' + self.name)
+            print('code:' + self.code)
+            print('port:' + self.port)
+            print('mapid:' + self.mapid)
+            time.sleep(5)
+
+
+class Backend(WebSocket):
     def handleMessage(self):
         for client in clients:
             client.sendMessage(self.address[0] + u' - ' + self.data)
@@ -30,10 +45,10 @@ class Backend(WebSocket):
             name = data[1]
             code = data[2]
             port = data[3]
-            map = data[4]
-            print('name: ' + name)
-            print('code: ' + code)
-            print('port: ' + port)
+            mapid = data[4]
+            match = Match(name, code, port, mapid)
+            match.start()
+
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             print(command)
             os.system(command)
@@ -48,7 +63,7 @@ class Backend(WebSocket):
                 s = s.replace('${GSLT-""}', '${GSLT-"' + code + '"}')
                 s = s.replace('${PORT-"27015"}', '${PORT-"' + port + '"}')
                 s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
-                s = s.replace('+map $MAP', '+host_workshop_map ' + map)
+                s = s.replace('+map $MAP', '+host_workshop_map ' + mapid)
                 f.write(s)
             command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' start'
             os.system(command)
