@@ -4,6 +4,7 @@ import time
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 
 clients = []
+matches = []
 
 
 class Check(threading.Thread):
@@ -27,11 +28,21 @@ class Match(threading.Thread):
         self.mapid = mapid
 
     def run(self):
+        i = 0
         while True:
             print('name:' + str(self.name))
             print('code:' + str(self.code))
             print('port:' + str(self.port))
             print('mapid:' + str(self.mapid))
+            if i == 5:
+                for client in clients:
+                    client.sendMessage('delete')
+                    client.sendMessage('delete')
+                    client.sendMessage('delete')
+                    client.sendMessage('delete')
+                    client.sendMessage('delete')
+
+            i = i + 1
             time.sleep(5)
 
 
@@ -49,6 +60,7 @@ class Backend(WebSocket):
             mapid = data[4]
             match = Match(name, code, port, mapid)
             match.start()
+            matches.append(match)
 
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             print(command)
