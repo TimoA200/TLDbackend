@@ -21,7 +21,7 @@ class Match(threading.Thread):
         i = 0
         while not self.canDelete:
             i = i + 1
-            print('i -> ' + i)
+            print('i -> ' + str(i))
             if i == 5:
                 self.canDelete = True
             if self.canDelete:
