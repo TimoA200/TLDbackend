@@ -6,17 +6,6 @@ from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 clients = []
 matches = []
 
-class Check(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-
-    def run(self):
-        pass
-
-
-check = Check()
-check.start()
-
 
 class Match(threading.Thread):
     def __init__(self, name, code, port, mapid):
@@ -25,31 +14,44 @@ class Match(threading.Thread):
         self.code = code
         self.port = port
         self.mapid = mapid
-
-    def create(self):
-        pass
+        self.canDelete = False
 
     def run(self):
+        self.create()
         i = 0
-        while True:
-            self.yeet()
-            print('name:' + str(self.name))
-            print('code:' + str(self.code))
-            print('port:' + str(self.port))
-            print('mapid:' + str(self.mapid))
-            if i == 5:
-                for client in clients:
-                    client.sendMessage('delete')
-                    client.sendMessage('delete')
-                    client.sendMessage('delete')
-                    client.sendMessage('delete')
-                    client.sendMessage('delete')
-
+        while not self.canDelete:
             i = i + 1
+            print('i -> ' + i)
+            if i == 5:
+                self.canDelete = True
+            if self.canDelete:
+                self.delete()
+                break
             time.sleep(5)
 
-    def yeet(self):
-        print('yeet')
+    def create(self):
+        print('try to create and start the server')
+        command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' create'
+        os.system(command)
+        with open('/root/csgo@' + self.name + '/msm.d/cfg/server.conf', 'r') as f:
+            s = f.read()
+        with open('/root/csgo@' + self.name + '/msm.d/cfg/server.conf', 'w') as f:
+            s = s.replace('${GSLT-""}', '${GSLT-"' + self.code + '"}')
+            s = s.replace('${PORT-"27015"}', '${PORT-"' + self.port + '"}')
+            s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
+            s = s.replace('+map $MAP', '+host_workshop_map ' + self.mapid)
+            f.write(s)
+        command = '/home/mastermind/csgo-mutliserver/csgo-server @' + self.name + ' start'
+        os.system(command)
+        print('successfully created and started server')
+
+    def delete(self):
+        print('try to stop and delete the server')
+        command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' stop'
+        os.system(command)
+        command = 'rm -r /root/csgo@' + self.name
+        os.system(command)
+        print('successfully stopped and deleted server')
 
 
 class Backend(WebSocket):
@@ -60,43 +62,13 @@ class Backend(WebSocket):
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
-            name = data[1]
-            code = data[2]
-            port = data[3]
-            mapid = data[4]
-            match = Match(name, code, port, mapid)
+            match = Match(data[1], data[2], data[3], data[4])
             match.start()
             matches.append(match)
 
-            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
-            print(command)
-            os.system(command)
-            command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP ' + port + ' 192.168.178.72 1 ' + name + '-tld-udp 0'
-            print(command)
-            os.system(command)
-            command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' create'
-            os.system(command)
-            with open('/root/csgo@' + name + '/msm.d/cfg/server.conf', 'r') as f:
-                s = f.read()
-            with open('/root/csgo@' + name + '/msm.d/cfg/server.conf', 'w') as f:
-                s = s.replace('${GSLT-""}', '${GSLT-"' + code + '"}')
-                s = s.replace('${PORT-"27015"}', '${PORT-"' + port + '"}')
-                s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
-                s = s.replace('+map $MAP', '+host_workshop_map ' + mapid)
-                f.write(s)
-            command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' start'
-            os.system(command)
         elif data[0] == 'd':
             name = data[1]
             port = data[2]
-            command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' stop'
-            os.system(command)
-            command = 'rm -r /root/csgo@' + name
-            os.system(command)
-            command = '/home/mastermind/FBShell/FBShell.sh DeletePortMapping 0.0.0.0 ' + port + ' TCP'
-            os.system(command)
-            command = '/home/mastermind/FBShell/FBShell.sh DeletePortMapping 0.0.0.0 ' + port + ' UDP'
-            os.system(command)
 
     def handleConnected(self):
         print(self.address, 'connected')
@@ -113,5 +85,3 @@ class Backend(WebSocket):
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
-
-print('Stopping backend')
