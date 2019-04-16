@@ -71,14 +71,16 @@ class Backend(WebSocket):
         print('message received from: ' + self.address[0] + " -> " + self.data)
         data = self.data.split(" ")
         print(data)
-        if data[0] == 'c':
+        if data[0] == 'c':  # name -> data[1] | code -> data[2] | port -> data[3] | mapid -> data[4]
             match = Match(data[1], data[2], data[3], data[4])
             match.start()
             matches.append(match)
 
-        elif data[0] == 'd':
-            name = data[1]
-            port = data[2]
+        elif data[0] == 'd':  # name -> data[1] | port -> data[2]
+            for match in matches:
+                if match.getName() == data[1]:
+                    match.canDelete = True
+                    matches.remove(match)
 
     def handleConnected(self):
         print(self.address, 'connected')
@@ -92,6 +94,9 @@ class Backend(WebSocket):
         for client in clients:
             client.sendMessage(self.address[0] + u' - disconnected')
 
+
+check = Check()
+check.start()
 
 backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
