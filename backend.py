@@ -35,10 +35,6 @@ class Match(threading.Thread):
             time.sleep(5)
 
 
-match = Match(2, 2, 2, 2)
-match.start()
-
-
 class Backend(WebSocket):
     def handleMessage(self):
         for client in clients:
@@ -51,8 +47,8 @@ class Backend(WebSocket):
             code = data[2]
             port = data[3]
             mapid = data[4]
-            #match = Match(name, code, port, mapid)
-            #match.start()
+            match = Match(name, code, port, mapid)
+            match.start()
 
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             print(command)
