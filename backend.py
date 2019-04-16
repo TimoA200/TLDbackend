@@ -20,6 +20,7 @@ check.start()
 
 class Match(threading.Thread):
     def __init__(self, name, code, port, mapid):
+        super().__init__(name)
         self.name = name
         self.code = code
         self.port = port
