@@ -6,11 +6,6 @@ from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 clients = []
 matches = []
 
-
-def test():
-    print('aösdä<HGadfasdfasdfasdf')
-
-
 class Check(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -30,6 +25,10 @@ class Match(threading.Thread):
         self.code = code
         self.port = port
         self.mapid = mapid
+        self.yeet()
+
+    def create(self):
+        pass
 
     def run(self):
         i = 0
@@ -49,6 +48,9 @@ class Match(threading.Thread):
             i = i + 1
             time.sleep(5)
 
+    def yeet(self):
+        print('yeet')
+
 
 class Backend(WebSocket):
     def handleMessage(self):
@@ -58,7 +60,6 @@ class Backend(WebSocket):
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
-            test()
             name = data[1]
             code = data[2]
             port = data[3]
