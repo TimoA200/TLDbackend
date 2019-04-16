@@ -36,8 +36,11 @@ class Match(threading.Thread):
 
     def run(self):
         self.create()
-        if self.canDelete:
-            self.delete()
+        while True:
+            if self.canDelete:
+                self.delete()
+                break
+        print('breakäasdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjiajsivjadfaöifjöasdjfjasödfijaödfjiajfdiajsdfioöajsfioajdfojioäaidfjiasdfijäadfjäjjmnö')
 
     def create(self):
         print('try to create and start the server')
