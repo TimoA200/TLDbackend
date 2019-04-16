@@ -7,6 +7,24 @@ clients = []
 matches = []
 
 
+class Check(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        while True:
+            print('check if there are any servers to delete')
+            for match in matches:
+                try:
+                    fh = open('/root/csgo@' + match.name + '/csgo/addons/sourcemod/delete.txt', 'r')
+                    print('server with id -> ' + match.name + ' is ready to delete')
+                    match.canDelete = True
+                    matches.remove(match)
+                except FileNotFoundError:
+                    pass
+            time.sleep(10)
+
+
 class Match(threading.Thread):
     def __init__(self, name, code, port, mapid):
         threading.Thread.__init__(self)
@@ -18,16 +36,8 @@ class Match(threading.Thread):
 
     def run(self):
         self.create()
-        i = 0
-        while not self.canDelete:
-            i = i + 1
-            print('i -> ' + str(i))
-            if i == 5:
-                self.canDelete = True
-            if self.canDelete:
-                self.delete()
-                break
-            time.sleep(5)
+        if self.canDelete:
+            self.delete()
 
     def create(self):
         print('try to create and start the server')
