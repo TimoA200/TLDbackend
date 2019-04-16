@@ -80,4 +80,5 @@ class Backend(threading.Thread, WebSocket):
 if __name__ == "__main__":
     backend = SimpleWebSocketServer('', 11111, Backend)
     backend.serveforever()
-    print('Stopping backend')
+
+print('Stopping backend')
