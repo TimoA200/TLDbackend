@@ -41,7 +41,7 @@ class Match(threading.Thread):
             s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
             s = s.replace('+map $MAP', '+host_workshop_map ' + self.mapid)
             f.write(s)
-        command = '/home/mastermind/csgo-mutliserver/csgo-server @' + self.name + ' start'
+        command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' start'
         os.system(command)
         print('successfully created and started server')
 
