@@ -25,10 +25,10 @@ class Match:
         self.port = port
         self.mapid = mapid
 
-        print('name: ' + name)
-        print('code: ' + code)
-        print('port: ' + port)
-        print('mapid: ' + mapid)
+        print('name: ' + str(name))
+        print('code: ' + str(code))
+        print('port: ' + str(port))
+        print('mapid: ' + str(mapid))
 
     #def run(self):
      #   while True:
@@ -39,7 +39,7 @@ class Match:
           #  time.sleep(5)
 
 
-match = Match(2, 2, 2, 2)
+match = Match(, 2, 2, 2)
 
 
 class Backend(WebSocket):
