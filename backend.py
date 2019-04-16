@@ -56,7 +56,7 @@ class Backend(threading.Thread, WebSocket):
             name = data[1]
             port = data[2]
             command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' stop'
-            os. system(command)
+            os.system(command)
             command = 'rm -r /root/csgo@' + name
             os.system(command)
             command = '/home/mastermind/FBShell/FBShell.sh DeletePortMapping 0.0.0.0 ' + port + ' TCP'
@@ -77,7 +77,7 @@ class Backend(threading.Thread, WebSocket):
             client.sendMessage(self.address[0] + u' - disconnected')
 
 
-backend = SimpleWebSocketServer('', 11111, Backend)
-backend.serveforever()
-
-print('Stopping backend')
+if __name__ == "__main__":
+    backend = SimpleWebSocketServer('', 11111, Backend)
+    backend.serveforever()
+    print('Stopping backend')
