@@ -7,6 +7,10 @@ clients = []
 matches = []
 
 
+def test():
+    print('aösdä<HGadfasdfasdfasdf')
+
+
 class Check(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -110,7 +114,3 @@ backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
 
 print('Stopping backend')
-
-
-def test():
-    print('aösdä<HGadfasdfasdfasdf')
