@@ -20,7 +20,6 @@ check.start()
 
 class Match(threading.Thread):
     def __init__(self, name, code, port, mapid):
-        super().__init__(name)
         self.name = name
         self.code = code
         self.port = port
@@ -35,6 +34,10 @@ class Match(threading.Thread):
             time.sleep(5)
 
 
+match = Match('akdf', 23, 23, 23)
+match.start()
+
+
 class Backend(WebSocket):
     def handleMessage(self):
         for client in clients:
@@ -43,19 +46,12 @@ class Backend(WebSocket):
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
-            print('2')
             name = data[1]
-            print('2')
             code = data[2]
-            print('2')
             port = data[3]
-            print('2')
             mapid = data[4]
-            print('2')
-            match = Match(name, code, port, mapid)
-            print('2')
-            match.start()
-            print('2')
+            #match = Match(name, code, port, mapid)
+            #match.start()
 
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' TCP ' + port + ' 192.168.178.72 1 ' + name + '-tld-tcp 0'
             print(command)
