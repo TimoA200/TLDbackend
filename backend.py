@@ -18,7 +18,7 @@ check = Check()
 check.start()
 
 
-class Backend(threading.Thread, WebSocket):
+class Backend(WebSocket):
 
     def handleMessage(self):
         for client in clients:
