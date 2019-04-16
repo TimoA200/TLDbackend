@@ -39,21 +39,16 @@ class Backend(WebSocket):
             command = '/home/mastermind/FBShell/FBShell.sh AddPortMapping 0.0.0.0 ' + port + ' UDP ' + port + ' 192.168.178.72 1 ' + name + '-tld-udp 0'
             print(command)
             os.system(command)
-            #command = './match.sh ' + name + ' ' + code + ' ' + port
             command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' create'
             os.system(command)
             with open('/root/csgo@' + name + '/msm.d/cfg/server.conf', 'r') as f:
-                print('0')
                 s = f.read()
-                print('1')
             with open('/root/csgo@' + name + '/msm.d/cfg/server.conf', 'w') as f:
-                print('2')
                 s = s.replace('${GSLT-""}', '${GSLT-"' + code + '"}')
-                print('3')
                 s = s.replace('${PORT-"27015"}', '${PORT-"' + port + '"}')
-                print('4')
                 f.write(s)
-                print('5')
+            command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' start'
+            os.system(command)
         elif data[0] == 'd':
             name = data[1]
             port = data[2]
