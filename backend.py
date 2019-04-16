@@ -56,7 +56,7 @@ class Match(threading.Thread):
             f.write(s)
         command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' start'
         os.system(command)
-        print('successfully created and started server')
+        print('successfully created and started server on port -> ' + self.port)
 
     def delete(self):
         print('try to stop and delete the server')
