@@ -18,25 +18,28 @@ check = Check()
 check.start()
 
 
-class Match(threading.Thread):
+class Match:
     def __init__(self, name, code, port, mapid):
-        super().__init__(name)
         self.name = name
         self.code = code
         self.port = port
         self.mapid = mapid
 
-    def run(self):
-        while True:
-            print('name:' + self.name)
-            print('code:' + self.code)
-            print('port:' + self.port)
-            print('mapid:' + self.mapid)
-            time.sleep(5)
+        print('name: ' + name)
+        print('code: ' + code)
+        print('port: ' + port)
+        print('mapid: ' + mapid)
+
+    #def run(self):
+     #   while True:
+      #      print('name:' + self.name)
+       #     print('code:' + self.code)
+        #    print('port:' + self.port)
+         #   print('mapid:' + self.mapid)
+          #  time.sleep(5)
 
 
-match = Match('akdf', 23, 23, 23)
-match.start()
+match = Match(2, 2, 2, 2)
 
 
 class Backend(WebSocket):
