@@ -54,6 +54,7 @@ class Backend(WebSocket):
         data = self.data.split(" ")
         print(data)
         if data[0] == 'c':
+            test()
             name = data[1]
             code = data[2]
             port = data[3]
@@ -109,3 +110,7 @@ backend = SimpleWebSocketServer('', 11111, Backend)
 backend.serveforever()
 
 print('Stopping backend')
+
+
+def test():
+    print('aösdä<HGadfasdfasdfasdf')
