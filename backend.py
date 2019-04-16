@@ -77,8 +77,7 @@ class Backend(threading.Thread, WebSocket):
             client.sendMessage(self.address[0] + u' - disconnected')
 
 
-if __name__ == "__main__":
-    backend = SimpleWebSocketServer('', 11111, Backend)
-    backend.serveforever()
+backend = SimpleWebSocketServer('', 11111, Backend)
+backend.serveforever()
 
 print('Stopping backend')
