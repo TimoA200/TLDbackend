@@ -36,6 +36,7 @@ class Match(threading.Thread):
 
 
 match = Match(2, 2, 2, 2)
+match.start()
 
 
 class Backend(WebSocket):
