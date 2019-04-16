@@ -30,6 +30,7 @@ class Backend(WebSocket):
             name = data[1]
             code = data[2]
             port = data[3]
+            map = data[4]
             print('name: ' + name)
             print('code: ' + code)
             print('port: ' + port)
@@ -46,6 +47,8 @@ class Backend(WebSocket):
             with open('/root/csgo@' + name + '/msm.d/cfg/server.conf', 'w') as f:
                 s = s.replace('${GSLT-""}', '${GSLT-"' + code + '"}')
                 s = s.replace('${PORT-"27015"}', '${PORT-"' + port + '"}')
+                s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
+                s = s.replace('+map $MAP', '+host_workshop_map ' + map)
                 f.write(s)
             command = '/home/mastermind/csgo-multiserver/csgo-server @' + name + ' start'
             os.system(command)
