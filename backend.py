@@ -28,10 +28,10 @@ class Match(threading.Thread):
 
     def run(self):
         while True:
-            print('name:' + self.name)
-            print('code:' + self.code)
-            print('port:' + self.port)
-            print('mapid:' + self.mapid)
+            print('name:' + str(self.name))
+            print('code:' + str(self.code))
+            print('port:' + str(self.port))
+            print('mapid:' + str(self.mapid))
             time.sleep(5)
 
 
