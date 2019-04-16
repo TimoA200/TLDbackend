@@ -25,7 +25,6 @@ class Match(threading.Thread):
         self.code = code
         self.port = port
         self.mapid = mapid
-        self.yeet()
 
     def create(self):
         pass
@@ -33,6 +32,7 @@ class Match(threading.Thread):
     def run(self):
         i = 0
         while True:
+            self.yeet()
             print('name:' + str(self.name))
             print('code:' + str(self.code))
             print('port:' + str(self.port))
