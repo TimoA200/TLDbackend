@@ -16,8 +16,8 @@ def creategslt():
     os.system(command)
     html = open("gslt.html").read()
     soup = BeautifulSoup(html)
-    a = soup.find(string="test")
-    print("a: " + a)
+    gslt = soup.find(string="test").find_previous_sibling("td").find_previous_sibling("td")
+    print('gslt -> ' + gslt)
 
 
 def deletegslt():
