@@ -2,9 +2,29 @@ import os
 import threading
 import time
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+from bs4 import BeautifulSoup
 
 clients = []
 matches = []
+
+
+def creategslt():
+    print('try to create gslt for server with id -> test')
+    command = 'curl -d "appid=730&memo=' + 'test' + '&sessionid=7f6485556d7104ef41146653" --header "Host: steamcommunity.com" --header "Connection: keep-alive" --header "Cache-Control: max-age=0" --header "Origin: https://steamcommunity.com" --header "Upgrade-Insecure-Requests: 1" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3" --header "Referer: https://steamcommunity.com/dev/managegameservers" --header "Accept-Encoding: gzip, deflate, br" --header "Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7" --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -X POST https://steamcommunity.com/dev/creategsaccount -o gslt.html'
+    os.system(command)
+    command = 'curl https://steamcommunity.com/dev/managegameservers --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -o test.html'
+    os.system(command)
+    html = open("gslt.html").read()
+    soup = BeautifulSoup(html)
+    a = soup.find(string="test")
+    print("a: " + a)
+
+
+def deletegslt():
+    pass
+
+
+creategslt()
 
 
 class Check(threading.Thread):
@@ -40,7 +60,14 @@ class Match(threading.Thread):
             if self.canDelete:
                 self.delete()
                 break
-        print('breakäasdkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjiajsivjadfaöifjöasdjfjasödfijaödfjiajfdiajsdfioöajsfioajdfojioäaidfjiasdfijäadfjäjjmnö')
+
+    def creategslt(self):
+        print('try to create gslt for server with id -> ' + self.name)
+        command = 'curl -d "appid=730&memo=' + self.name + '&sessionid=7f6485556d7104ef41146653" --header "Host: steamcommunity.com" --header "Connection: keep-alive" --header "Cache-Control: max-age=0" --header "Origin: https://steamcommunity.com" --header "Upgrade-Insecure-Requests: 1" --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3" --header "Referer: https://steamcommunity.com/dev/managegameservers" --header "Accept-Encoding: gzip, deflate, br" --header "Accept-Language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7" --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -X POST https://steamcommunity.com/dev/creategsaccount -o test.html'
+        os.system(command)
+
+    def deletegslt(self):
+        pass
 
     def create(self):
         print('try to create and start the server')
