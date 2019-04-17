@@ -25,11 +25,13 @@ def deletegslt():
     print('try to delete gslt for server with id -> test')
     html = open("gslt/test.html").read()
     soup = BeautifulSoup(html)
+    steamid = soup.find("td", string="test").find_next_sibling("td").find("input", {"name":"steamid"})['value']
+    print('steamid -> ' + steamid)
     #steamid = soup.find_all("td", string="test")[0].find_next_sibling("td").find_all
 
 
 creategslt()
-
+deletegslt()
 
 class Check(threading.Thread):
     def __init__(self):
