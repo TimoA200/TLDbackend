@@ -10,18 +10,22 @@ matches = []
 
 def creategslt():
     print('try to create gslt for server with id -> test')
-    command = 'curl -d "appid=730&memo=' + 'test' + '&sessionid=7f6485556d7104ef41146653" --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -X POST https://steamcommunity.com/dev/creategsaccount -o gslt.html'
+    command = 'curl -d "appid=730&memo=' + 'test' + '&sessionid=7f6485556d7104ef41146653" --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -X POST https://steamcommunity.com/dev/creategsaccount -o test/gslt.html'
     os.system(command)
-    command = 'curl https://steamcommunity.com/dev/managegameservers --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -o gslt.html'
+    command = 'curl https://steamcommunity.com/dev/managegameservers --header "Cookie: sessionid=7f6485556d7104ef41146653; steamCountry=DE%7C1014e5d9cdff2826218d409fb1eb5a56; timezoneOffset=7200,0; _ga=GA1.2.275275590.1555411498; steamLoginSecure=76561198832942031%7C%7CD71E1EE78B42609277E0314337FD4546AD467576; steamMachineAuth76561198832942031=00FA6438D4EFD3645FA96E4E8EBE9701B85EF355; browserid=1089217996877788449; recentlyVisitedAppHubs=730%2C225600%2C327070; app_impressions=730@2_9_100006_100202|730@2_9_100006_100202|225600@2_9_100006_100202|730@2_9_100006_100202|327070@2_9_100006_100202" -o test/gslt.html'
     os.system(command)
-    html = open("gslt.html").read()
+    html = open("test/gslt.html").read()
     soup = BeautifulSoup(html)
-    gslt = soup.find_all("td", string="test")[0].find_previous_sibling("td").find_previous_sibling("td").decode_contents()
+    gslt = soup.find("td", string="test").find_previous_sibling("td").find_previous_sibling("td").decode_contents()
     print('gslt -> ' + gslt)
+    print('successfully created gslt')
 
 
 def deletegslt():
-    pass
+    print('try to delete gslt for server with id -> test')
+    html = open("test/gslt.html").read()
+    soup = BeautifulSoup(html)
+    #steamid = soup.find_all("td", string="test")[0].find_next_sibling("td").find_all
 
 
 creategslt()
