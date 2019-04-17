@@ -8,6 +8,12 @@ clients = []
 matches = []
 
 
+def sendtobot(msg):
+    for client in clients:
+        print('send message to bot -> ' + msg)
+        client.sendMessage(msg)
+
+
 class Check(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -78,6 +84,7 @@ class Match(threading.Thread):
         command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' start'
         os.system(command)
         print('successfully created and started server on port -> ' + self.port)
+        sendtobot(self.name + ' r')
 
     def delete(self):
         print('try to stop and delete the server')
