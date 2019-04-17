@@ -94,6 +94,7 @@ class Match(threading.Thread):
         command = 'rm -r /root/csgo@' + self.name
         os.system(command)
         print('successfully stopped and deleted server')
+        sendtobot(self.name + ' d')
 
 
 class Backend(WebSocket):
