@@ -17,7 +17,8 @@ def creategslt():
     html = open("gslt.html").read()
     soup = BeautifulSoup(html)
     gslt = soup.find_all("td", string="test")
-    print('gslt -> ' + gslt)
+    for gsl in gslt:
+        print('gslt -> ' + gsl)
     #gslt = gsl.find_previous_sibling("td")
     #print('gslt -> ' + str(gslt))
 
