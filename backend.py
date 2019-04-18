@@ -20,7 +20,7 @@ class Check(threading.Thread):
 
     def run(self):
         while True:
-            print('check if there are any servers to delete')
+            #print('check if there are any servers to delete')
             for match in matches:
                 try:
                     fh = open('/root/csgo@' + match.name + '/csgo/addons/sourcemod/delete.txt', 'r')
