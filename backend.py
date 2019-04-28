@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 clients = []
 matches = []
 
+# Settings
+tickrate = 64
+
 
 def sendtobot(msg):
     for client in clients:
@@ -78,6 +81,8 @@ class Match(threading.Thread):
         with open('/root/csgo@' + self.name + '/msm.d/cfg/server.conf', 'w') as f:
             s = s.replace('${GSLT-""}', '${GSLT-"' + self.gslt + '"}')
             s = s.replace('${PORT-"27015"}', '${PORT-"' + self.port + '"}')
+            s = s.replace('${TICKRATE-"128"}', '${TICKRATE-"' + str(tickrate) + '"}')
+            s = s.replace('TITLE="CS:GO server @INSTANCE (powered by csgo-multiserver)"', 'TITLE="CS:GO server @INSTANCE (powered by TLD https://tld.hopto.org)"')
             s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
             s = s.replace('+map $MAP', '+host_workshop_map ' + self.mapid)
             f.write(s)
