@@ -36,12 +36,12 @@ class Check(threading.Thread):
 
 
 class Match(threading.Thread):
-    def __init__(self, name, gslt, port, mapid):
+    def __init__(self, name, port, mapid, gamemode):
         threading.Thread.__init__(self)
         self.name = name
-        self.gslt = gslt
         self.port = port
         self.mapid = mapid
+        self.gamemode = gamemode
         self.canDelete = False
 
     def run(self):
@@ -84,6 +84,40 @@ class Match(threading.Thread):
             s = s.replace('${TICKRATE-"128"}', '${TICKRATE-"' + str(tickrate) + '"}')
             s = s.replace('TITLE="CS:GO server @INSTANCE (powered by csgo-multiserver)"', 'TITLE="CS:GO server @INSTANCE (powered by TLD https://tld.hopto.org)"')
             s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
+            if self.gamemode == 'competitive':
+                game_type = 0
+                game_mode = 1
+            elif self.gamemode == 'casual':
+                game_type = 0
+                game_mode = 0
+            elif self.gamemode == 'wingman':
+                game_type = 0
+                game_mode = 2
+            elif self.gamemode == 'deathmatch':
+                game_type = 1
+                game_mode = 2
+            elif self.gamemode == 'demolition':
+                game_type = 1
+                game_mode = 1
+            elif self.gamemode == 'armsrace':
+                game_type = 1
+                game_mode = 0
+            elif self.gamemode == 'guardian':
+                game_type = 4
+                game_mode = 0
+            elif self.gamemode == 'coop':
+                game_type = 4
+                game_mode = 1
+            elif self.gamemode == 'dangerzone':
+                game_type = 6
+                game_mode = 0
+            else:
+                print('Wrong argument in gamemode using default values for casual.')
+                game_type = 0
+                game_mode = 0
+
+            s = s.replace('${GAMETYPE-"0"}', '${GAMETYPE-"' + str(game_type) + '"}')
+            s = s.replace('${GAMEMODE-"1"}', '${GAMEMODE-"' + str(game_mode) + '"}')
             s = s.replace('+map $MAP', '+host_workshop_map ' + self.mapid)
             f.write(s)
         command = '/home/mastermind/csgo-multiserver/csgo-server @' + self.name + ' start'
@@ -109,7 +143,7 @@ class Backend(WebSocket):
         print('message received from: ' + self.address[0] + " -> " + self.data)
         data = self.data.split(" ")
         print(data)
-        if data[0] == 'c':  # name -> data[1] | gslt -> data[2] | port -> data[3] | mapid -> data[4]
+        if data[0] == 'c':  # name -> data[1] | gslt -> data[2] | port -> data[2] | mapid -> data[3] | gamemode -> data[4]
             match = Match(data[1], data[2], data[3], data[4])
             match.start()
             matches.append(match)
