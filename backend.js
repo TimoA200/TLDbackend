@@ -1,7 +1,7 @@
 const Logger = require("./logger.js");
 const Express = require('./express.js')(3000);
 
-const DEBUG = true;
+const DEBUG = false;
 
 Express.loadExpress(DEBUG);
 
