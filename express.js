@@ -10,7 +10,7 @@ const EXPRESS = (_port = 3000) => {
   this.app = express();
 
   this.loadExpress = (debugMode = false, debugOptions = {
-    host: "localhost",
+    host: "127.0.0.1",
     port: 3000
   }) => {
 
@@ -20,7 +20,7 @@ const EXPRESS = (_port = 3000) => {
     } : {
       key: fs.readFileSync("/etc/letsencrypt/live/tld.hopto.org/privkey.pem", "utf8"),
       cert: fs.readFileSync("/etc/letsencrypt/live/tld.hopto.org/fullchain.pem", "utf8"),
-    }
+    };
 
     var app = this.app;
 
@@ -29,9 +29,10 @@ const EXPRESS = (_port = 3000) => {
       app.set('host', process.env.HOST || debugOptions.host);
     }
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Origin", "https:tld.hopto.org");
       res.header("Access-Control-Allow-Methods", 'DELETE, PUT, GET, POST, OPTIONS');
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
+      res.header("Access-Control-Allow-Credentials", "true");
       next();
     });
 
@@ -48,13 +49,13 @@ const EXPRESS = (_port = 3000) => {
       http.createServer(app).listen(app.get('port'), () =>
         logger.log("Started on port " + app.get('port') + " <DEBUG MODE>"));
     }
-  }
+  };
 
   this.getExpress = () => {
     return this.app;
-  }
+  };
 
   return this;
-}
+;}
 
 module.exports = EXPRESS;
