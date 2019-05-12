@@ -7,7 +7,7 @@ const mysql = require('mysql');
 const MySQLStore = require('express-mysql-session')(session);
 const SteamStrategy = require('passport-steam').Strategy;
 
-const DEBUG = true;
+const DEBUG = false;
 
 const options = {
   host: 'clanbattleleague.com',
