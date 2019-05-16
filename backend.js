@@ -3,32 +3,17 @@ const Express = require('./express.js')(3000);
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const mysql = require('mysql');
-const MySQLStore = require('express-mysql-session')(session);
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 const SteamStrategy = require('passport-steam').Strategy;
 
 const DEBUG = false;
 
-const options = {
-  host: 'clanbattleleague.com',
-  port: '3306',
-  user: 'mastermind',
-  password: 'greyhound-avert-plop',
-  database: 'test'
-};
-
-const connection = mysql.createConnection(options);
-const sessionStore = new MySQLStore({
-  createDatabaseTable: true,
-  schema: {
-    tableName: 'sessions',
-    columnNames: {
-      session_id: 'session_id',
-      expires: 'expires',
-      data: 'data'
-    }
-  }
-}, connection);
+mongoose.connect('mongodb://tld.hopto.org/tld', {
+  useNewUrlParser: true
+});
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -44,13 +29,7 @@ passport.use(new SteamStrategy({
   apiKey: 'A81E42AF2DDFDC28A9B13CE43901F112'
 },
     function(identifier, profile, done) {
-      // asynchronous verification, for effect...
       process.nextTick(function () {
-
-        // To keep the example simple, the user's Steam profile is returned to
-        // represent the logged-in user.  In a typical application, you would want
-        // to associate the Steam account with a user record in your database,
-        // and return that user instead.
         profile.identifier = identifier;
         return done(null, profile);
       });
@@ -64,8 +43,8 @@ app.use(cookieParser());
 app.use(session({
   secret: 'your secret',
   name: 'not_sessionid',
-  store: sessionStore,
-  resave: true,
+  store: new MongoStore({ mongooseConnection: db }),
+  resave: false,
   saveUninitialized: true}));
 
 app.use(passport.initialize());
