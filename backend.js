@@ -1,4 +1,4 @@
-const Express = require('./express.js')(3000);
+const Express = require('./express.js');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -24,9 +24,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-  returnURL: Config.DEBUG === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return',
-  realm: Config.DEBUG === true ? 'http://192.168.178.43:3000' : 'https://tld.hopto.org:3000',
-  apiKey: 'A81E42AF2DDFDC28A9B13CE43901F112'
+        returnURL: Config().getHost() + ':' + Config().getPort() + '/auth/steam/return',
+        realm: Config().getHost() + ':' + Config().getPort(),
+        apiKey: 'A81E42AF2DDFDC28A9B13CE43901F112'
 },
     function(identifier, profile, done) {
       process.nextTick(function () {
@@ -36,7 +36,7 @@ passport.use(new SteamStrategy({
     }
 ));
 
-Express.loadExpress();
+Express().loadExpress();
 
 const app = Express.getExpress();
 app.use(cookieParser());
@@ -63,14 +63,15 @@ app.get('/logout', function(req, res){
 app.get('/auth/steam',
     passport.authenticate('steam', { failureRedirect: '/' }),
     function(req, res) {
+        Logger.log('test');
       res.redirect('/');
 });
 
 app.get('/auth/steam/return',
     passport.authenticate('steam', { failureRedirect: '/' }),
     function(req, res) {
-      res.redirect(DEBUG === true ? 'http://192.168.178.43:4400/account' : 'https://tld.hopto.org/account');
-      console.log('sessionid: ' + req.cookies['not_sessionid']);
+        res.redirect(DEBUG === true ? 'http://192.168.178.43:4400/account' : 'https://tld.hopto.org/account');
+        console.log('sessionid: ' + req.cookies['not_sessionid']);
     });
 
 app.post('/test', async function (req, res) {

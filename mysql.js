@@ -67,10 +67,10 @@ const MySQL = function() {
         resolve(result);
       });
     });
-  }
+  };
 
 
   return this;
-}
+};
 
 module.exports = MySQL();
