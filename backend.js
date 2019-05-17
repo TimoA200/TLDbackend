@@ -1,4 +1,4 @@
-const Express = require('./express.js');
+const Express = require('./express.js')();
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -36,7 +36,7 @@ passport.use(new SteamStrategy({
     }
 ));
 
-Express().loadExpress();
+Express.loadExpress();
 
 const app = Express.getExpress();
 app.use(cookieParser());
@@ -70,7 +70,7 @@ app.get('/auth/steam',
 app.get('/auth/steam/return',
     passport.authenticate('steam', { failureRedirect: '/' }),
     function(req, res) {
-        res.redirect(DEBUG === true ? 'http://192.168.178.43:4400/account' : 'https://tld.hopto.org/account');
+        res.redirect(Config().DEBUG ? Config().DEBUG_HOST + ':' + Config().DEBUG_WEB_PORT + '/account' : Config().PRODUCTION_HOST + '/account');
         console.log('sessionid: ' + req.cookies['not_sessionid']);
     });
 
