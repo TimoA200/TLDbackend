@@ -1,10 +1,10 @@
 const config = () => {
-    this.DEBUG = true;
+    this.DEBUG = false;
     this.DEBUG_HOST = 'http://192.168.178.43';
     this.DEBUG_PORT = 3000;
     this.DEBUG_WEB_PORT = 4400;
 
-    this.PRODUCTION_HOST = 'https://dietastatur.de';
+    this.PRODUCTION_HOST = 'https://tld.hopto.org';
     this.PRODUCTION_PORT = 3000;
 
     this.getHost = () => {

@@ -26,7 +26,7 @@ const EXPRESS = () => {
     app.set('port', process.env.PORT || (Config().getPort()));
     app.set('host', process.env.HOST || Config().getHost());
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", Config().getHost() + ':' + Config().getPort() + '/auth/steam/return');
+      res.header("Access-Control-Allow-Origin", Config().DEBUG ? Config().DEBUG_HOST + ':' + Config().DEBUG_WEB_PORT : Config().PRODUCTION_HOST);
       res.header("Access-Control-Allow-Methods", 'DELETE, PUT, GET, POST, OPTIONS');
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
       res.header("Access-Control-Allow-Credentials", "true");
