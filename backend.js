@@ -36,7 +36,7 @@ passport.use(new SteamStrategy({
     }
 ));
 
-Express.loadExpress(Config.DEBUG);
+Express.loadExpress();
 
 const app = Express.getExpress();
 app.use(cookieParser());

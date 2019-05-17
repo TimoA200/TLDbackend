@@ -16,7 +16,7 @@ const EXPRESS = (_port = 3000) => {
     port: 3000
   }) => {
 
-    const options = debugMode ? {
+    const options = Config.DEBUG ? {
       key: "",
       cert: ""
     } : {
@@ -26,12 +26,12 @@ const EXPRESS = (_port = 3000) => {
 
     var app = this.app;
 
-    app.set('port', process.env.PORT || (debugMode ? debugOptions.port : _port));
-    if (debugMode) {
+    app.set('port', process.env.PORT || (Config.DEBUG ? debugOptions.port : _port));
+    if (Config.DEBUG) {
       app.set('host', process.env.HOST || debugOptions.host);
     }
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", debugMode === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return');
+      res.header("Access-Control-Allow-Origin", Config.DEBUG === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return');
       res.header("Access-Control-Allow-Methods", 'DELETE, PUT, GET, POST, OPTIONS');
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
       res.header("Access-Control-Allow-Credentials", "true");
@@ -44,7 +44,7 @@ const EXPRESS = (_port = 3000) => {
 
     app.use(bp.json());
 
-    if (!debugMode) {
+    if (!Config.DEBUG) {
       https.createServer(options, app).listen(app.get('port'), app.get('host'), () =>
         logger.log("Started on Port " + app.get('port') + " <PRODUCTION MODE>"));
     } else {
