@@ -5,6 +5,8 @@ const https = require('https');
 const http = require('http');
 const fs = require('fs');
 
+const Config = require('./config.js');
+
 const EXPRESS = (_port = 3000) => {
 
   this.app = express();
@@ -29,7 +31,7 @@ const EXPRESS = (_port = 3000) => {
       app.set('host', process.env.HOST || debugOptions.host);
     }
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", "https://tld.hopto.org");
+      res.header("Access-Control-Allow-Origin", debugMode === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return');
       res.header("Access-Control-Allow-Methods", 'DELETE, PUT, GET, POST, OPTIONS');
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
       res.header("Access-Control-Allow-Credentials", "true");
@@ -56,6 +58,6 @@ const EXPRESS = (_port = 3000) => {
   };
 
   return this;
-;}
+};
 
 module.exports = EXPRESS;

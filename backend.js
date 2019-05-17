@@ -1,4 +1,3 @@
-const Logger = require("./logger.js");
 const Express = require('./express.js')(3000);
 const passport = require('passport');
 const session = require('express-session');
@@ -7,7 +6,8 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const SteamStrategy = require('passport-steam').Strategy;
 
-const DEBUG = false;
+const Logger = require("./logger.js");
+const Config = require("./config");
 
 mongoose.connect('mongodb://tld.hopto.org/tld', {
   useNewUrlParser: true
@@ -24,8 +24,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new SteamStrategy({
-  returnURL: DEBUG === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return',
-  realm: DEBUG === true ? 'http://192.168.178.43:3000' : 'https://tld.hopto.org:3000',
+  returnURL: Config.DEBUG === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return',
+  realm: Config.DEBUG === true ? 'http://192.168.178.43:3000' : 'https://tld.hopto.org:3000',
   apiKey: 'A81E42AF2DDFDC28A9B13CE43901F112'
 },
     function(identifier, profile, done) {
@@ -36,7 +36,7 @@ passport.use(new SteamStrategy({
     }
 ));
 
-Express.loadExpress(DEBUG);
+Express.loadExpress(Config.DEBUG);
 
 const app = Express.getExpress();
 app.use(cookieParser());
