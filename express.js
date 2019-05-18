@@ -7,16 +7,13 @@ const fs = require('fs');
 
 const Config = require('./config.js');
 
-const EXPRESS = (_port = 3000) => {
+const EXPRESS = () => {
 
   this.app = express();
 
-  this.loadExpress = (debugMode = false, debugOptions = {
-    host: "127.0.0.1",
-    port: 3000
-  }) => {
+  this.loadExpress = () => {
 
-    const options = debugMode ? {
+    const options = Config().DEBUG ? {
       key: "",
       cert: ""
     } : {
@@ -26,12 +23,11 @@ const EXPRESS = (_port = 3000) => {
 
     var app = this.app;
 
-    app.set('port', process.env.PORT || (debugMode ? debugOptions.port : _port));
-    if (debugMode) {
-      app.set('host', process.env.HOST || debugOptions.host);
-    }
+    app.set('port', process.env.PORT || Config().getPort());
+    if(Config().DEBUG)
+      app.set('host', process.env.HOST || Config().getHost());
     app.use(function(req, res, next) {
-      res.header("Access-Control-Allow-Origin", debugMode === true ? 'http://192.168.178.43:3000/auth/steam/return' : 'https://tld.hopto.org:3000/auth/steam/return');
+      res.header("Access-Control-Allow-Origin", Config().DEBUG ? Config().DEBUG_HOST + ':' + Config().DEBUG_WEB_PORT : Config().PRODUCTION_HOST);
       res.header("Access-Control-Allow-Methods", 'DELETE, PUT, GET, POST, OPTIONS');
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length");
       res.header("Access-Control-Allow-Credentials", "true");
@@ -44,19 +40,18 @@ const EXPRESS = (_port = 3000) => {
 
     app.use(bp.json());
 
-    if (!debugMode) {
+    if (!Config().DEBUG) {
       https.createServer(options, app).listen(app.get('port'), app.get('host'), () =>
-        logger.log("Started on Port " + app.get('port') + " <PRODUCTION MODE>"));
+        logger.log("Started on Host " + app.get('host') + " with PORT " + app.get('port') + " <PRODUCTION MODE>"));
     } else {
       http.createServer(app).listen(app.get('port'), () =>
-        logger.log("Started on port " + app.get('port') + " <DEBUG MODE>"));
+        logger.log("Started on Host " + app.get('host') + " with PORT " + app.get('port') + " <DEBUG MODE>"));
     }
   };
 
   this.getExpress = () => {
     return this.app;
   };
-
   return this;
 };
 
