@@ -1,5 +1,5 @@
 const config = () => {
-    this.DEBUG = false;
+    this.DEBUG = true;
     this.DEBUG_HOST = 'http://192.168.178.43';
     this.DEBUG_PORT = 3000;
     this.DEBUG_WEB_PORT = 4400;

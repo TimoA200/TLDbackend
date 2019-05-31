@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const SteamStrategy = require('passport-steam').Strategy;
+const multer = require('multer');
 
 const Logger = require("./logger.js");
 const Config = require("./config");
@@ -77,7 +78,7 @@ app.get('/auth/steam/return',
 app.post('/test', async function (req, res) {
   Logger.log('===== START TEST REQUEST =====');
   console.log(req.body);
-  res.send('Your request was successful.');
+  res.send(JSON.stringify('Your request was successful.'));
   Logger.log('===== END TEST REQUEST =====');
 });
 
@@ -90,3 +91,35 @@ function ensureAuthenticated(req, res, next) {
   }
   res.redirect('/');
 }
+
+const Schema = mongoose.Schema;
+
+const ImageSchema = new Schema({
+    filename: String
+});
+
+const ImageModel = mongoose.model('uploads', ImageSchema);
+
+/*const image_instace = new ImageModel({ filename: 'test' });
+image_instace.save( (err) => {
+    if(err) console.log(err);
+});*/
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.filename + ' - ');
+    }
+});
+
+const upload = multer({ storage: storage });
+
+
+app.post('/upload', upload.single('image'), async function (req, res) {
+    Logger.log('===== START UPLOAD REQUEST =====');
+    //console.log(req.body + '');
+    res.send(JSON.stringify('Upload was successful.'));
+    Logger.log('===== END UPLOAD REQUEST =====');
+});

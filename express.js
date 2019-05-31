@@ -38,6 +38,8 @@ const EXPRESS = () => {
       extended: false
     }));
 
+    app.use('/uploads', express.static('uploads'));
+
     app.use(bp.json());
 
     if (!Config().DEBUG) {
