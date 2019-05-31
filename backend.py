@@ -153,6 +153,10 @@ class Backend(WebSocket):
                 if match.getName() == data[1]:
                     match.canDelete = True
                     matches.remove(match)
+        elif data[0] == 'da': # delete all servers
+            for match in matches:
+                match.canDelete = True
+                matches.remove(match)
 
     def handleConnected(self):
         print(self.address, 'connected')
