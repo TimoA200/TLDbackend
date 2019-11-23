@@ -4,16 +4,19 @@ from match import Match
 
 matches = []
 
+
 def createMatch(name, port, mapid, gamemode):
     match = Match(name, port, mapid, gamemode)
     match.start()
     matches.append(match)
+
 
 def deleteMatch(name):
     for match in matches:
         if match.getName() == name:
             match.canDelete = True
             matches.remove(match)
+
 
 def deleteAll():
     for match in matches:

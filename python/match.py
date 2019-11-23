@@ -34,8 +34,8 @@ class Match(threading.Thread):
             s = s.replace('${GSLT-""}', '${GSLT-"' + self.gslt + '"}')
             s = s.replace('${PORT-"27015"}', '${PORT-"' + self.port + '"}')
             s = s.replace('${TICKRATE-"128"}', '${TICKRATE-"' + str(config.TICKRATE) + '"}')
-            s = s.replace('TITLE="CS:GO server @INSTANCE (powered by csgo-multiserver)"',
-                              'TITLE="CS:GO server @INSTANCE (powered by TLD https://tld.hopto.org)"')
+            s = s.replace('TITLE="CS:GO server @$INSTANCE (powered by csgo-multiserver)"',
+                              'TITLE="CS:GO server @$INSTANCE (powered by TLD https://tld.hopto.org)"')
             s = s.replace('+mapgroup $MAPGROUP', '-authkey A81E42AF2DDFDC28A9B13CE43901F112')
             if self.gamemode == 'competitive':
                 game_type = 0
