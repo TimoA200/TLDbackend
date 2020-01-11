@@ -64,6 +64,9 @@ class Match(threading.Thread):
             elif self.gamemode == 'dangerzone':
                 game_type = 6
                 game_mode = 0
+            elif self.gamemode == 'custom':
+                game_type = 3
+                game_mode = 0
             else:
                 print('Wrong argument in gamemode using default values for casual.')
                 game_type = 0
