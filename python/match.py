@@ -26,7 +26,7 @@ class Match(threading.Thread):
         try: self.gslt = Gslt.createGSLT(self.name)
         except: print('Something went wrong while creating the gslt for server with id -> ' + self.name)
         else: print('Successfully created gslt -> ' + self.gslt + ' for server with id -> ' + self.name)
-        command = '/root/csgo-multiserver/csgo-server @' + self.name + ' create'
+        command = 'csgo-server @' + self.name + ' create'
         os.system(command)
         with open('/root/csgo@' + self.name + '/msm.d/cfg/server.conf', 'r') as f:
             s = f.read()
@@ -76,7 +76,7 @@ class Match(threading.Thread):
             s = s.replace('${GAMEMODE-"1"}', '${GAMEMODE-"' + str(game_mode) + '"}')
             s = s.replace('+map $MAP', '+host_workshop_map ' + self.mapid)
             f.write(s)
-        command = '/root/csgo-multiserver/csgo-server @' + self.name + ' start'
+        command = 'csgo-server @' + self.name + ' start'
         os.system(command)
         print('Successfully created and startet server on port -> ' + self.port)
         socketServer.SocketServer.sendToBot(self.name + ' r')
@@ -87,7 +87,7 @@ class Match(threading.Thread):
         try: Gslt.deleteGSLT(self.name)
         except: print('Something went wrong while deleting the gslt for server with id -> ' + self.name)
         else: print('Successfully deleted gslt -> ' + self.gslt + ' for server with id -> ' + self.name)
-        command = '/root/csgo-multiserver/csgo-server @' + self.name + ' stop'
+        command = 'csgo-server @' + self.name + ' stop'
         os.system(command)
         command = 'rm -r /root/csgo@' + self.name
         os.system(command)
